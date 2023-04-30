@@ -1,0 +1,91 @@
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+<div class="w3-container " role="main">
+  <br/>
+  <form [formGroup]="perfilForm" #formDirective="ngForm" (ngSubmit)="submit(formDirective)" class="example-form">
+    <mat-form-field class="example-full-width">
+      <mat-label>Número de cliente</mat-label>
+      <input matInput formControlName="id">
+    </mat-form-field>
+
+    <p>
+      <mat-form-field class="example-full-width">
+        <mat-label>Nombre</mat-label>
+        <input matInput formControlName="name">
+        <mat-error *ngIf="this.perfilForm.get('name')?.getError('required')">Este campo es requerido</mat-error>
+        <mat-error *ngIf="this.perfilForm.get('name')?.getError('maxlength')">Este campo debe de contener máximo 30 caracteres</mat-error>
+      </mat-form-field>
+    </p>
+
+    <p>
+      <mat-form-field class="example-full-width">
+        <mat-label>Apellidos</mat-label>
+        <input matInput formControlName="apellidos">
+        <mat-error *ngIf="this.perfilForm.get('apellidos')?.getError('required')">Este campo es requerido</mat-error>
+        <mat-error *ngIf="this.perfilForm.get('apellidos')?.getError('maxlength')">Este campo debe de contener máximo 30 caracteres</mat-error>
+      </mat-form-field>
+    </p>
+
+    <p>
+      <mat-form-field appearance="fill">
+        <mat-label>Edad</mat-label>
+        <input matInput formControlName="edad" type="number">
+        <mat-error *ngIf="this.perfilForm.get('edad')?.getError('required')">Este campo es requerido</mat-error>
+        <mat-error *ngIf="this.perfilForm.get('edad')?.getError('min')">Este campo no puede ser menor a 0</mat-error>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="fill">
+        <mat-label>País</mat-label>
+        <mat-select 
+        [disabled]="paises.length == 0" 
+        [(ngModel)]="country" 
+        [ngModelOptions]="{standalone: true}"
+        (selectionChange)="selectPais()">
+          <mat-option *ngFor="let pais of paises" [value]="pais"  >
+            {{pais.country}}
+          </mat-option>
+          
+        </mat-select>
+        <small style="color: red" *ngIf="this.perfilForm.get('pais')?.getError('required')">Este campo es requerido</small>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="fill">
+        <mat-label>Ciudad</mat-label>
+        <mat-select 
+        [disabled]="ciudades.length == 0" 
+        [(ngModel)]="city" 
+        [ngModelOptions]="{standalone: true}" 
+        (selectionChange)="selectCiudad()">
+          <mat-option *ngFor="let ciudad of ciudades" [value]="ciudad" >
+            {{ciudad}}
+          </mat-option>
+        </mat-select>
+        <small style="color: red" *ngIf="this.perfilForm.get('ciudad')?.getError('required')">Este campo es requerido</small>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field class="example-full-width">
+        <mat-label>Dirección</mat-label>
+        <input matInput formControlName="direccion">
+        <mat-error *ngIf="this.perfilForm.get('direccion')?.getError('required')">Este campo es requerido</mat-error>
+        <mat-error *ngIf="this.perfilForm.get('pais')?.getError('maxlength')">Este campo solo puede contener máximo 100 caracteres</mat-error>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="fill" floatLabel="always">
+        <mat-label>Balance</mat-label>
+        <input matInput formControlName="balance" type="number" class="example-right-align" placeholder="0">
+        <span matTextPrefix>$&nbsp;</span>
+        <span matTextSuffix>.00</span>
+        <mat-error *ngIf="this.perfilForm.get('balance')?.getError('required')">Este campo es requerido</mat-error>
+        <mat-error *ngIf="this.perfilForm.get('balance')?.getError('min')">Este campo no puede ser menor a 0</mat-error>
+      </mat-form-field>
+    </p>
+    <p>
+      <button class="button" type="submit" mat-raised-button color="primary">Confirmar</button>
+      <button mat-raised-button color="warn">Cancelar</button>
+    </p>
+  </form>
+</div>
